@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Edtech Island — Your Learning Universe</title>
+  <meta name="description" content="Edtech Island — An immersive learning platform for ICSE students. Explore chapters, experiments, quizzes and mixed reality." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Segoe+UI:wght@300;400;600&display=swap" rel="stylesheet" />
+  <!-- Phosphor Icons (same as Solar system.html) -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Three.js (same as Solar system.html) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 1: HOME / WELCOME
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-home" class="screen active" style="background-image: url('assets/main Background image.png');">
+  <div class="bg-overlay"></div>
+  <div class="particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="screen-content home-content">
+
+    <!-- Logo pill -->
+    <div class="logo-pill" role="banner">
+      <div class="logo-star">✦</div>
+      <span class="logo-text">EDTECH ISLAND</span>
+    </div>
+
+    <!-- Welcome card -->
+    <div class="glass-card home-card" role="main">
+
+      <!-- Stylised header (from Solar system.html) -->
+      <div class="solar-header-wrap">
+        <div class="solar-header-accent"></div>
+        <h1 class="solar-title">Welcome to <span class="gradient-text">Study Island</span></h1>
+      </div>
+
+      <!-- Subject preview pills -->
+      <div class="subject-preview-row" role="list" aria-label="Available subjects">
+        <div class="subject-pill glass-mini" role="listitem">
+          <span class="subject-icon">🔬</span>
+          <div class="subject-pill-info">
+            <span class="subject-pill-name">SCIENCE</span>
+            <span class="subject-pill-sub">5 Studies Active</span>
+          </div>
+        </div>
+        <div class="subject-pill glass-mini" role="listitem">
+          <span class="subject-icon">🏛️</span>
+          <div class="subject-pill-info">
+            <span class="subject-pill-name">HISTORY</span>
+            <span class="subject-pill-sub">3 Eras Open</span>
+          </div>
+        </div>
+        <div class="subject-pill glass-mini" role="listitem">
+          <span class="subject-icon">🌍</span>
+          <div class="subject-pill-info">
+            <span class="subject-pill-name">GEOGRAPHY</span>
+            <span class="subject-pill-sub">6 Continents Mapped</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="cta-group">
+        <button id="btn-start" class="btn-primary" onclick="navigateTo('screen-subjects')" aria-label="Start learning">
+          <span class="btn-icon">▶</span> START
+        </button>
+        <button id="btn-resume" class="btn-secondary" onclick="navigateTo('screen-subjects')" aria-label="Resume learning">
+          RESUME
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav glass-nav" aria-label="Main navigation">
+    <button class="nav-btn active" onclick="navigateTo('screen-home')" id="nav-home-1" aria-label="Home"><span class="nav-icon">⌂</span><span class="nav-label">HOME</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" onclick="navigateTo('screen-subjects')" id="nav-studies-1" aria-label="Studies"><span class="nav-icon">📖</span><span class="nav-label">STUDIES</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" id="nav-world-1" aria-label="World"><span class="nav-icon">🗺️</span><span class="nav-label">WORLD</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" id="nav-profile-1" aria-label="Profile"><span class="nav-icon">◉</span><span class="nav-label">PROFILE</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" id="nav-exit-1" aria-label="Exit"><span class="nav-icon">→</span><span class="nav-label">EXIT</span></button>
+  </nav>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 2: SUBJECT SELECTION
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-subjects" class="screen" style="background-image: url('assets/main Background image.png');">
+  <div class="bg-overlay"></div>
+  <div class="particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="screen-content subjects-content">
+
+    <!-- Header -->
+    <div class="page-header-card glass-pill" role="heading" aria-level="1">
+      <span class="page-title-text">(Subject Selection)</span>
+    </div>
+
+    <!-- Subject grid -->
+    <div class="subjects-grid" role="list" aria-label="Select a subject">
+
+      <button class="subject-card glass-panel-card" onclick="navigateTo('screen-chapters')" id="subj-science" role="listitem" aria-label="Science">
+        <div class="subject-card-icon">🔬</div>
+        <div class="subject-card-name">SCIENCE</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 45%;"></div></div>
+        <div class="subject-card-stat">5 Studies Active</div>
+      </button>
+
+      <button class="subject-card glass-panel-card" id="subj-history" role="listitem" aria-label="History">
+        <div class="subject-card-icon">🏛️</div>
+        <div class="subject-card-name">HISTORY</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 30%;"></div></div>
+        <div class="subject-card-stat">3 Eras Open</div>
+      </button>
+
+      <button class="subject-card glass-panel-card" id="subj-geography" role="listitem" aria-label="Geography">
+        <div class="subject-card-icon">🌍</div>
+        <div class="subject-card-name">GEOGRAPHY</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 75%;"></div></div>
+        <div class="subject-card-stat">8 Continents Mapped</div>
+      </button>
+
+      <button class="subject-card glass-panel-card" id="subj-pe" role="listitem" aria-label="Physical Education">
+        <div class="subject-card-icon">🏃</div>
+        <div class="subject-card-name">PHYSICAL<br/>EDUCATION</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 60%;"></div></div>
+        <div class="subject-card-stat">Gym Hours Logged</div>
+      </button>
+
+      <button class="subject-card glass-panel-card" id="subj-arts" role="listitem" aria-label="Arts">
+        <div class="subject-card-icon">🎨</div>
+        <div class="subject-card-name">ARTS</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 40%;"></div></div>
+        <div class="subject-card-stat">Gallery Pieces Created</div>
+      </button>
+
+      <button class="subject-card glass-panel-card" id="subj-english" role="listitem" aria-label="English">
+        <div class="subject-card-icon">📝</div>
+        <div class="subject-card-name">ENGLISH</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 65%;"></div></div>
+        <div class="subject-card-stat">Novels Read</div>
+      </button>
+
+      <button class="subject-card glass-panel-card" id="subj-math" role="listitem" aria-label="Mathematics">
+        <div class="subject-card-icon">π</div>
+        <div class="subject-card-name">MATHEMATICS</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 85%;"></div></div>
+        <div class="subject-card-stat">Problems Mastered</div>
+      </button>
+
+      <button class="subject-card glass-panel-card" id="subj-music" role="listitem" aria-label="Music">
+        <div class="subject-card-icon">🎵</div>
+        <div class="subject-card-name">MUSIC</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 25%;"></div></div>
+        <div class="subject-card-stat">Compositions Written</div>
+      </button>
+
+    </div>
+
+
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav glass-nav" aria-label="Main navigation">
+    <button class="nav-btn" onclick="navigateTo('screen-home')" aria-label="Home"><span class="nav-icon">⌂</span><span class="nav-label">HOME</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn active" onclick="navigateTo('screen-subjects')" aria-label="Studies"><span class="nav-icon">📖</span><span class="nav-label">STUDIES</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" aria-label="World"><span class="nav-icon">🗺️</span><span class="nav-label">WORLD</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" aria-label="Profile"><span class="nav-icon">◉</span><span class="nav-label">PROFILE</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" onclick="navigateTo('screen-home')" aria-label="Exit"><span class="nav-icon">→</span><span class="nav-label">EXIT</span></button>
+  </nav>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 3: CHAPTER SELECTION
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-chapters" class="screen" style="background-image: url('assets/main Background image.png');">
+  <div class="bg-overlay"></div>
+  <div class="particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="screen-content chapters-content">
+
+    <!-- Breadcrumb header -->
+    <div class="page-header-card glass-pill breadcrumb-pill" role="heading" aria-level="1">
+      <span class="breadcrumb-label">ICSE Class 5</span>
+      <span class="page-title-text">(Science: Chapter Selection)</span>
+    </div>
+
+    <!-- Chapter grid -->
+    <div class="chapters-grid" role="list" aria-label="Select a chapter">
+
+      <button class="chapter-card glass-panel-card" onclick="navigateTo('screen-chapter-detail', {chapterId:'light-shadows'})" id="ch-light-shadows" role="listitem" aria-label="Chapter 1: Light and Shadows">
+        <div class="chapter-card-icon">💡</div>
+        <div class="chapter-card-number">LIGHT AND<br/>SHADOWS</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 100%;"></div></div>
+        <div class="chapter-card-status available">● Available</div>
+      </button>
+
+      <button class="chapter-card glass-panel-card" onclick="navigateTo('screen-chapter-detail', {chapterId:'space-solar'})" id="ch-space-solar" role="listitem" aria-label="Chapter 2: Space and Solar System">
+        <div class="chapter-card-icon">🪐</div>
+        <div class="chapter-card-number">SPACE AND<br/>SOLAR SYSTEM</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 45%;"></div></div>
+        <div class="chapter-card-status available">● Available</div>
+      </button>
+
+      <button class="chapter-card glass-panel-card" id="ch-skeletal" role="listitem" aria-label="Chapter 3: Skeletal System">
+        <div class="chapter-card-icon">🦴</div>
+        <div class="chapter-card-number">SKELETAL<br/>SYSTEM</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 0%;"></div></div>
+        <div class="chapter-card-status available">● Available</div>
+      </button>
+
+      <button class="chapter-card glass-panel-card" id="ch-food-health" role="listitem" aria-label="Chapter 4: Food and Health">
+        <div class="chapter-card-icon">🍎</div>
+        <div class="chapter-card-number">FOOD AND<br/>HEALTH</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 0%;"></div></div>
+        <div class="chapter-card-status available">● Available</div>
+      </button>
+
+      <button class="chapter-card glass-panel-card" id="ch-pollination" role="listitem" aria-label="Chapter 5: Plant Reproduction - Pollination">
+        <div class="chapter-card-icon">🌸</div>
+        <div class="chapter-card-number">PLANT REPRO.<br/>— POLLINATION</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 0%;"></div></div>
+        <div class="chapter-card-status available">● Available</div>
+      </button>
+
+      <button class="chapter-card glass-panel-card" id="ch-fertilization" role="listitem" aria-label="Chapter 6: Plant Reproduction - Fertilization">
+        <div class="chapter-card-icon">🌱</div>
+        <div class="chapter-card-number">PLANT REPRO.<br/>— FERTILIZATION</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 0%;"></div></div>
+        <div class="chapter-card-status available">● Available</div>
+      </button>
+
+      <button class="chapter-card glass-panel-card" id="ch-solids" role="listitem" aria-label="Chapter 7: Solids, Liquids, Gases">
+        <div class="chapter-card-icon">💧</div>
+        <div class="chapter-card-number">SOLIDS, LIQUIDS,<br/>GASES</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 0%;"></div></div>
+        <div class="chapter-card-status available">● Available</div>
+      </button>
+
+      <button class="chapter-card glass-panel-card" id="ch-interdependence" role="listitem" aria-label="Chapter 8: Interdependence">
+        <div class="chapter-card-icon">🕸️</div>
+        <div class="chapter-card-number">INTER-<br/>DEPENDENCE</div>
+        <div class="card-progress-track"><div class="card-progress-fill" style="width: 0%;"></div></div>
+        <div class="chapter-card-status available">● Available</div>
+      </button>
+
+    </div>
+
+
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav glass-nav" aria-label="Main navigation">
+    <button class="nav-btn" onclick="navigateTo('screen-home')" aria-label="Home"><span class="nav-icon">⌂</span><span class="nav-label">HOME</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn active" onclick="navigateTo('screen-subjects')" aria-label="Studies"><span class="nav-icon">📖</span><span class="nav-label">STUDIES</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" aria-label="World"><span class="nav-icon">🗺️</span><span class="nav-label">WORLD</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" aria-label="Profile"><span class="nav-icon">◉</span><span class="nav-label">PROFILE</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-btn" onclick="navigateTo('screen-home')" aria-label="Exit"><span class="nav-icon">→</span><span class="nav-label">EXIT</span></button>
+  </nav>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 4: CHAPTER DETAIL — styled from Solar system.html
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="screen-chapter-detail" class="screen" style="background-image: url('assets/chapter background.png');">
+  <div class="bg-overlay dark-overlay"></div>
+
+  <div class="screen-content chapter-detail-content">
+
+    <!-- Chapter header (Solar system.html style — pill + accent line) -->
+    <div class="solar-chapter-header" role="heading" aria-level="1">
+      <div class="solar-chapter-accent-line"></div>
+      <h2 id="detail-title" class="solar-chapter-title">LIGHT AND SHADOWS</h2>
+    </div>
+
+    <!-- Main content area -->
+    <div class="chapter-main-panel glass-panel-card">
+
+      <!-- ── Tab Navigation (Solar system.html style — square cards) ── -->
+      <div id="chapter-nav-tabs" class="chapter-tab-nav" role="tablist" aria-label="Chapter sections">
+
+        <button class="sol-tab active-tab" id="tab-experience" data-tab="experience" role="tab" aria-selected="true" aria-controls="tabpanel-experience">
+          <div class="sol-tab-icon-wrap sol-tab-active-icon" id="detail-tab-icon-wrap">
+            <i class="ph ph-planet" id="detail-tab-phosphor-icon"></i>
+          </div>
+          <span class="sol-tab-label">Chapter Experience</span>
+        </button>
+
+        <button class="sol-tab" id="tab-experiments" data-tab="experiments" role="tab" aria-selected="false" aria-controls="tabpanel-experiments">
+          <i class="ph ph-flask sol-tab-solo-icon"></i>
+          <span class="sol-tab-label">Experiments</span>
+        </button>
+
+        <button class="sol-tab" id="tab-quiz" data-tab="quiz" role="tab" aria-selected="false" aria-controls="tabpanel-quiz">
+          <i class="ph ph-list-checks sol-tab-solo-icon"></i>
+          <span class="sol-tab-label">Quiz</span>
+        </button>
+
+        <button class="sol-tab" id="tab-mixed-reality" data-tab="mixed-reality" role="tab" aria-selected="false" aria-controls="tabpanel-mixed-reality">
+          <i class="ph ph-goggles sol-tab-solo-icon"></i>
+          <span class="sol-tab-label">Mixed Reality</span>
+        </button>
+
+        <button class="sol-tab" id="tab-stories" data-tab="stories" role="tab" aria-selected="false" aria-controls="tabpanel-stories">
+          <i class="ph ph-book-open-text sol-tab-solo-icon"></i>
+          <span class="sol-tab-label">Stories</span>
+        </button>
+
+      </div>
+
+      <!-- ── Tab Panels ── -->
+      <div class="tab-panels-area">
+
+        <!-- Chapter Experience (with Three.js canvas like Solar system.html) -->
+        <div id="tabpanel-experience" class="sol-tab-panel active" role="tabpanel" aria-labelledby="tab-experience">
+          <div class="sol-experience-layout">
+
+            <!-- 3D Canvas (Solar system.html pattern) -->
+            <div class="sol-canvas-wrap">
+              <div id="canvas-container" class="sol-canvas-inner"></div>
+              <div id="canvas-loading" class="sol-canvas-loading">
+                <div class="sol-loading-spinner"></div>
+                <span>Initializing 3D Engine...</span>
+              </div>
+            </div>
+
+            <!-- Description + Action (Solar system.html pattern) -->
+            <div class="sol-description-wrap">
+              <p id="detail-description" class="sol-description-text">
+                The light and shadow simulation model provides interactive exploration of fundamental optical principles. Visualize the formation of complex shadow patterns, examine umbra and penumbra regions, and observe how light propagates to form shadows based on object shape and distance.
+              </p>
+              <div style="display:flex; justify-content:flex-start;">
+                <button class="sol-start-btn" id="btn-start-journey" aria-label="Start Journey">
+                  Start Journey
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Experiments tab — content to be added by user -->
+        <div id="tabpanel-experiments" class="sol-tab-panel" role="tabpanel" aria-labelledby="tab-experiments">
+          <div class="sol-locked-panel">
+            <i class="ph ph-flask sol-lock-icon" style="color:rgba(64,224,208,0.35);"></i>
+            <h3 class="sol-locked-title">Experiments Coming Soon</h3>
+            <p class="sol-locked-desc">Interactive laboratory experiments for this chapter will be added here.</p>
+          </div>
+        </div>
+
+        <!-- Quiz — locked (Solar system.html pattern) -->
+        <div id="tabpanel-quiz" class="sol-tab-panel" role="tabpanel" aria-labelledby="tab-quiz">
+          <div class="sol-locked-panel">
+            <i class="ph ph-lock-key sol-lock-icon"></i>
+            <h3 class="sol-locked-title">Content Locked</h3>
+            <p class="sol-locked-desc">Complete the Chapter Experience and Experiments to unlock this section.</p>
+          </div>
+        </div>
+
+        <!-- Mixed Reality — locked -->
+        <div id="tabpanel-mixed-reality" class="sol-tab-panel" role="tabpanel" aria-labelledby="tab-mixed-reality">
+          <div class="sol-locked-panel">
+            <i class="ph ph-lock-key sol-lock-icon"></i>
+            <h3 class="sol-locked-title">Content Locked</h3>
+            <p class="sol-locked-desc">Complete the Chapter Experience and Experiments to unlock this section.</p>
+          </div>
+        </div>
+
+        <!-- Stories — locked -->
+        <div id="tabpanel-stories" class="sol-tab-panel" role="tabpanel" aria-labelledby="tab-stories">
+          <div class="sol-locked-panel">
+            <i class="ph ph-lock-key sol-lock-icon"></i>
+            <h3 class="sol-locked-title">Content Locked</h3>
+            <p class="sol-locked-desc">Complete the Chapter Experience and Experiments to unlock this section.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Back / Next Chapter (Solar system.html pattern) -->
+    <div class="sol-bottom-nav-row">
+      <button class="sol-nav-btn" onclick="navigateTo('screen-chapters')" id="btn-back-chapter" aria-label="Go back">Back</button>
+      <button class="sol-nav-btn" id="btn-next-chapter" aria-label="Next chapter">Next Chapter</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SUB-APP OVERLAY (from Solar system.html — iframe launcher)
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="app-overlay" class="app-overlay hidden" role="dialog" aria-modal="true" aria-label="Full screen experiment">
+  <button id="close-app-btn" class="app-overlay-close" aria-label="Return to Main Menu">
+    <i class="ph ph-arrow-left"></i>
+    <span>Return to Main Menu</span>
+  </button>
+  <iframe id="app-iframe" class="app-iframe" allow="fullscreen" title="Interactive Experiment"></iframe>
+</div>
+
+
+<script src="script.js"></script>
+</body>
+</html>
