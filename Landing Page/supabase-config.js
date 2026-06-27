@@ -7,6 +7,12 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Listen for auth state changes (e.g. after OAuth redirect)
 supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT') {
+        localStorage.removeItem('blockRedirect');
+        localStorage.removeItem('edtech_user');
+        return;
+    }
+
     if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
         const user = session.user;
         const edtechUser = {
@@ -36,14 +42,21 @@ supabase.auth.onAuthStateChange((event, session) => {
         const isLoggingIn = localStorage.getItem('isLoggingIn');
 
         if (window.location.pathname.includes('login.html') || window.location.pathname === '/' || window.location.pathname.endsWith('B2B-landing-page-main/')) {
-            // Only enforce portal mismatch if they just clicked the login button
-            if (isLoggingIn === 'true' && actualRole !== selectedPortal) {
+            if (isLoggingIn === 'true') {
+                if (actualRole !== selectedPortal) {
+                    localStorage.removeItem('isLoggingIn');
+                    localStorage.setItem('blockRedirect', 'true');
+                    alert("Not registered to this portal. You selected " + selectedPortal + " but your email belongs to the " + actualRole + " portal.");
+                    supabase.auth.signOut();
+                    return;
+                }
                 localStorage.removeItem('isLoggingIn');
-                alert("Not registered to this portal. You selected " + selectedPortal + " but your email belongs to the " + actualRole + " portal.");
-                supabase.auth.signOut();
+            }
+
+            if (localStorage.getItem('blockRedirect') === 'true') {
                 return;
             }
-            localStorage.removeItem('isLoggingIn');
+
             window.location.href = window.location.origin + basePath + '/' + actualRole + '/';
         }
     }
@@ -59,7 +72,10 @@ export const signInWithGoogle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: redirectUrl
+            redirectTo: redirectUrl,
+            queryParams: {
+                prompt: 'select_account'
+            }
         }
     });
     
