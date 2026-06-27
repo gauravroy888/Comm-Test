@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Admin Portal Features</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 40px 20px; color: #333; }
+  h1 { border-bottom: 2px solid #eaecef; padding-bottom: 10px; }
+  h2 { margin-top: 30px; color: #2c3e50; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 10px; }
+  .critical { color: #d93025; font-weight: bold; }
+  .high { color: #f29900; font-weight: bold; }
+  .medium { color: #1a73e8; font-weight: bold; }
+  .low { color: #80868b; font-weight: bold; }
+  .tip { background-color: #f1f8ff; border-left: 4px solid #0366d6; padding: 15px; border-radius: 4px; margin-top: 30px; }
+  @media print {
+    body { padding: 0; max-width: none; }
+    .tip { border: 1px solid #0366d6; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Super Admin Portal Features & Architecture</h1>
+<p>A "Super Admin" portal requires omnipotent access to the platform. Unlike a regular admin or teacher, a Super Admin manages the platform's infrastructure, global policies, finances, and the admins themselves.</p>
+<p>Here is a prioritized list of features you should include in your Super Admin Portal:</p>
+
+<h2>1. Global User & Role Management <span class="critical">🔴 Critical</span></h2>
+<p>The ability to manage every single user type (Students, Teachers, Admins) across the entire platform.</p>
+<ul>
+  <li><strong>Role Assignment:</strong> Promote/demote users (e.g., making a Teacher an Admin, or granting Super Admin rights).</li>
+  <li><strong>Impersonation (Log in as):</strong> The ability to log in as <em>any</em> user to troubleshoot issues they are reporting without needing their password.</li>
+  <li><strong>Access Control & Bans:</strong> Instantly suspend accounts, force password resets, or permanently delete violators.</li>
+  <li><strong>Bulk Operations:</strong> Uploading CSVs to create hundreds of users at once or migrating users between institutions/cohorts.</li>
+</ul>
+
+<h2>2. Organization / Tenant Management <span class="critical">🔴 Critical</span></h2>
+<p>If your platform serves multiple schools, institutes, or distinct organizations, the Super Admin needs to manage them.</p>
+<ul>
+  <li><strong>Institute Onboarding:</strong> Create new instances/workspaces for a newly signed-up school.</li>
+  <li><strong>Resource Allocation:</strong> Set storage limits, API limits, or max user caps per institution.</li>
+  <li><strong>Global Settings Override:</strong> Enforce specific settings across all organizations (e.g., mandatory 2FA).</li>
+</ul>
+
+<h2>3. Financial & Subscription Dashboard <span class="high">🟡 High</span></h2>
+<p>Super Admins need to track the money and subscriptions flowing through the platform.</p>
+<ul>
+  <li><strong>Revenue Analytics:</strong> Track MRR (Monthly Recurring Revenue), transaction volume, and failed payments.</li>
+  <li><strong>Subscription Management:</strong> Upgrade/downgrade organizational tiers, apply manual discounts, or issue refunds.</li>
+  <li><strong>Payment Gateway Logs:</strong> Direct access to Stripe/Razorpay webhook logs to debug payment failures.</li>
+</ul>
+
+<h2>4. System Health & Infrastructure Monitoring <span class="high">🟡 High</span></h2>
+<p>You need a birds-eye view of how the tech stack is performing.</p>
+<ul>
+  <li><strong>Uptime & Performance:</strong> Live graphs of server CPU/Memory usage, API latency, and database load.</li>
+  <li><strong>Error Logs & Crash Reports:</strong> A feed of frontend and backend exceptions (e.g., 500 errors) to spot bugs before users report them.</li>
+  <li><strong>Database Management:</strong> Directly trigger database backups, view storage usage in Supabase, and monitor database health.</li>
+</ul>
+
+<h2>5. Global Content & Asset Management <span class="medium">🔵 Medium</span></h2>
+<p>Controlling the master content that flows down to the rest of the platform.</p>
+<ul>
+  <li><strong>Course Catalog Master Control:</strong> Review, approve, or reject courses created by teachers before they go live.</li>
+  <li><strong>Global Announcements:</strong> The ability to send a push notification or banner alert to <em>every single user</em> on the platform (e.g., "Scheduled maintenance in 1 hour").</li>
+  <li><strong>Asset Library:</strong> Manage global storage, delete large unused video files, and monitor CDN usage.</li>
+</ul>
+
+<h2>6. Audit Logs & Security <span class="medium">🔵 Medium</span></h2>
+<p>For compliance and internal security, tracking <em>who did what</em>.</p>
+<ul>
+  <li><strong>Action Trails:</strong> A permanent, un-editable log of critical actions (e.g., "Admin X deleted User Y at 3:00 PM").</li>
+  <li><strong>Security Alerts:</strong> Notifications for suspicious activity (e.g., 50 failed login attempts from the same IP).</li>
+</ul>
+
+<h2>7. Configuration & Feature Flags <span class="low">⚪ Low/Nice to Have</span></h2>
+<p>Dynamic control over the platform's behavior without needing to deploy new code.</p>
+<ul>
+  <li><strong>Feature Toggles:</strong> Turn new features on/off for specific user cohorts (A/B testing).</li>
+  <li><strong>UI Customization:</strong> Change global branding elements, default themes, or maintenance mode splash screens.</li>
+</ul>
+
+<div class="tip">
+  <strong>Tip: Where to start?</strong><br>
+  When building this, start exclusively with <strong>Global User Management</strong> and <strong>System Monitoring</strong>. The financial and audit log features can usually be handled directly through external dashboards (like Stripe and Supabase) until your platform scales up!
+</div>
+
+<script>
+  window.onload = function() {
+    window.print();
+  };
+</script>
+</body>
+</html>

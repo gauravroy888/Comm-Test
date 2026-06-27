@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { Mail, Search, Users, Shield, Send, ArrowLeft, Megaphone } from 'lucide-react';
-import { db } from '../firebase';
-import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, where } from 'firebase/firestore';
+import { supabase } from '../supabase';
 
 export default function Inbox() {
   const [activeTab, setActiveTab] = useState('students'); // 'students' | 'staff' | 'announcements'
@@ -28,51 +27,54 @@ export default function Inbox() {
 
   // Fetch announcements
   useEffect(() => {
-    const q = query(collection(db, 'announcements'), orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const anns = [];
-      snapshot.forEach((doc) => anns.push({ id: doc.id, ...doc.data() }));
-      setAnnouncements(anns);
-    });
-    return () => unsubscribe();
+    const fetchAnnouncements = async () => {
+      const { data } = await supabase.from('announcements').select('*').order('createdAt', { ascending: false });
+      if (data) setAnnouncements(data);
+    };
+    
+    fetchAnnouncements();
+    
+    const subscription = supabase.channel('teacher_announcements')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'announcements' }, fetchAnnouncements)
+      .subscribe();
+      
+    return () => { supabase.removeChannel(subscription); };
   }, []);
 
   // Fetch conversations
   useEffect(() => {
     if (!currentUser) return;
     
-    // In a real app, query by participants array containing currentUser.uid
-    const q = query(collection(db, 'conversations'), orderBy('updatedAt', 'desc'));
+    const fetchConversations = async () => {
+      const { data } = await supabase.from('conversations').select('*').order('updatedAt', { ascending: false });
+      if (data) setConversations(data);
+    };
     
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const convos = [];
-      snapshot.forEach((doc) => {
-        convos.push({ id: doc.id, ...doc.data() });
-      });
-      setConversations(convos);
-    });
-
-    return () => unsubscribe();
+    fetchConversations();
+    
+    const subscription = supabase.channel('teacher_conversations')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'conversations' }, fetchConversations)
+      .subscribe();
+      
+    return () => { supabase.removeChannel(subscription); };
   }, [currentUser]);
 
   // Fetch messages for active chat
   useEffect(() => {
     if (!activeChat) return;
 
-    const q = query(
-      collection(db, `conversations/${activeChat.id}/messages`),
-      orderBy('createdAt', 'asc')
-    );
-
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const msgs = [];
-      snapshot.forEach((doc) => {
-        msgs.push({ id: doc.id, ...doc.data() });
-      });
-      setMessages(msgs);
-    });
-
-    return () => unsubscribe();
+    const fetchMessages = async () => {
+      const { data } = await supabase.from('messages').select('*').eq('conversationId', activeChat.id).order('createdAt', { ascending: true });
+      if (data) setMessages(data);
+    };
+    
+    fetchMessages();
+    
+    const subscription = supabase.channel('teacher_messages')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'messages', filter: `conversationId=eq.${activeChat.id}` }, fetchMessages)
+      .subscribe();
+      
+    return () => { supabase.removeChannel(subscription); };
   }, [activeChat]);
 
   const handleSendMessage = async (e) => {
@@ -80,12 +82,16 @@ export default function Inbox() {
     if (!newMessage.trim() || !activeChat || !currentUser) return;
 
     try {
-      await addDoc(collection(db, `conversations/${activeChat.id}/messages`), {
+      const { error } = await supabase.from('messages').insert({
+        conversationId: activeChat.id,
         text: newMessage,
         senderId: currentUser.uid,
         senderName: currentUser.name || "Teacher",
-        createdAt: serverTimestamp()
       });
+      if (error) throw error;
+      
+      await supabase.from('conversations').update({ lastMessage: newMessage, updatedAt: new Date() }).eq('id', activeChat.id);
+      
       setNewMessage("");
     } catch (error) {
       console.error("Error sending message: ", error);
@@ -162,7 +168,7 @@ export default function Inbox() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <h4 style={{ color: '#fff', margin: 0 }}>{ann.title}</h4>
                   <span style={{ color: 'var(--text-secondary)', fontSize: '12px' }}>
-                    {ann.createdAt?.toDate ? ann.createdAt.toDate().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : 'Just now'}
+                    {ann.createdAt ? new Date(ann.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : 'Just now'}
                   </span>
                 </div>
                 <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '14px', lineHeight: '1.5' }}>{ann.text}</p>
@@ -192,7 +198,7 @@ export default function Inbox() {
               </li>
             )) : (
               <li style={{ padding: '40px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                No conversations found. Ensure Firebase is configured.
+                No conversations found. Ensure Supabase is configured.
               </li>
             )}
           </ul>
@@ -219,7 +225,7 @@ export default function Inbox() {
                       {msg.text}
                     </div>
                     <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '5px', textAlign: isMe ? 'right' : 'left' }}>
-                      {msg.createdAt?.toDate ? msg.createdAt.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Sending...'}
+                      {msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Sending...'}
                     </div>
                   </div>
                 );
