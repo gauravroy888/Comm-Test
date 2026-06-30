@@ -192,6 +192,20 @@
             const tabs = document.querySelectorAll('.login-tab');
             const forms = document.querySelectorAll('.login-form-container');
             
+            // Get saved portal or default to student
+            let savedPortal = localStorage.getItem('selectedPortal') || 'student';
+            localStorage.setItem('selectedPortal', savedPortal);
+
+            // Sync UI to saved portal on load
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            const activeTabElement = document.querySelector(`.login-tab[data-tab="${savedPortal}"]`);
+            if (activeTabElement) activeTabElement.classList.add('active');
+            
+            const activeFormElement = document.getElementById('form-' + savedPortal);
+            if (activeFormElement) activeFormElement.classList.add('active');
+
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     // Remove active from all
@@ -200,8 +214,12 @@
                     
                     // Add active to clicked
                     tab.classList.add('active');
-                    const targetId = 'form-' + tab.getAttribute('data-tab');
+                    const targetTab = tab.getAttribute('data-tab');
+                    const targetId = 'form-' + targetTab;
                     document.getElementById(targetId).classList.add('active');
+                    
+                    // Store selected portal for Google Login check
+                    localStorage.setItem('selectedPortal', targetTab);
                 });
             });
             

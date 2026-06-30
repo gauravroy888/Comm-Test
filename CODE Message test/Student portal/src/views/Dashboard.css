@@ -366,37 +366,51 @@
 }
 
 /* Responsive Styles */
-@media (max-width: 1024px) {
-  .dashboard-content {
-    flex-direction: column;
-  }
-  
-  .dashboard-right {
-    width: 100%;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 1400px) {
+  .dashboard-grid {
+    grid-template-columns: 280px 1fr 300px;
+    gap: 16px;
   }
 }
 
-@media (max-width: 768px) {
-  .stats-grid {
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 280px 1fr;
+  }
+  /* Make the 3rd column (Comm Hub) span the full width below the first two */
+  .dash-col:nth-child(3) {
+    grid-column: span 2;
+  }
+  .learning-cards {
+    flex-wrap: wrap;
+  }
+  .learning-card {
+    flex: 1 1 calc(50% - 16px);
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
     grid-template-columns: 1fr;
   }
-  
-  .courses-grid {
+  .dash-col:nth-child(3) {
+    grid-column: span 1;
+  }
+  .mentors-grid {
     grid-template-columns: 1fr;
   }
-  
-  .course-card-content {
-    flex-direction: column;
-    align-items: flex-start;
+}
+
+@media (max-width: 600px) {
+  .learning-card {
+    flex: 1 1 100%;
   }
-  
-  .course-actions {
-    margin-top: 16px;
-    align-self: flex-start;
+  .circle-progress-wrapper {
+    width: 120px;
+    height: 120px;
+  }
+  .circle-value {
+    font-size: 24px;
   }
 }
 
