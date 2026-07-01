@@ -67,9 +67,9 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 });
 
 export const signInWithGoogle = async () => {
-    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '';
     const basePath = isLocal ? '' : '/Comm-Test';
-    const redirectUrl = window.location.origin + basePath + '/Landing Page/login.html';
+    const redirectUrl = window.location.origin + basePath + '/login.html';
 
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
