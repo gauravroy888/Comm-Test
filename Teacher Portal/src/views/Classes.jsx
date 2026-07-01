@@ -7,14 +7,15 @@ export default function Classes() {
     { id: '10A', name: 'Class 10-A', subject: 'Advanced Mathematics', students: 32, performance: '85%' },
     { id: '9B', name: 'Class 9-B', subject: 'Physics Basics', students: 28, performance: '78%' },
     { id: '11C', name: 'Class 11-C', subject: 'Quantum Mechanics', students: 24, performance: '92%' },
-    { id: '12A', name: 'Class 12-A', subject: 'Calculus', students: 40, performance: '88%' }
+    { id: '12A', name: 'Class 12-A', subject: 'Calculus', students: 40, performance: '88%' },
+    { id: '6A', name: 'Class 6th', subject: 'General Science', students: 30, performance: '82%' }
   ];
 
   return (
     <div className="view-container animate-fade-in">
       <div className="view-header">
         <h1>Assigned Classes</h1>
-        <p>Manage your subjects and student rosters.</p>
+        <p>Manage your subjects, student rosters, and class groups.</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
@@ -41,7 +42,10 @@ export default function Classes() {
               </div>
             </div>
             
-            <button className="btn btn-ghost" style={{ marginTop: '20px', width: '100%' }}>View Roster</button>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+              <button className="btn btn-ghost" style={{ flex: 1 }}>View Roster</button>
+              <button className="btn btn-primary" onClick={() => window.location.hash = '#/inbox'} style={{ flex: 1 }}>Manage Groups</button>
+            </div>
           </Card>
         ))}
       </div>
