@@ -157,7 +157,9 @@ export default function ChatInterface({ currentUser, activeTab, selectedClass, i
       } else if (activeTab === 'class_view' || activeTab === 'classes') {
         // Teacher portal: show both students and groups
         const classStudents = filtered.filter(p => p.role === 'student');
-        const classGroups = groups.map(g => ({ ...g, isGroup: true }));
+        const classGroups = groups
+          .filter(g => !selectedClass || g.class_name === selectedClass)
+          .map(g => ({ ...g, isGroup: true }));
         filtered = [...classGroups, ...classStudents];
       }
     }
@@ -294,6 +296,7 @@ export default function ChatInterface({ currentUser, activeTab, selectedClass, i
       name: newGroupName,
       type: 'group',
       participants: participants,
+      class_name: selectedClass || null,
       lastMessage: 'Group created'
     });
     

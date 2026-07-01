@@ -7,6 +7,12 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Listen for auth state changes (e.g. after OAuth redirect)
 supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT') {
+        localStorage.removeItem('blockRedirect');
+        localStorage.removeItem('edtech_user');
+        return;
+    }
+
     if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
         const user = session.user;
         const edtechUser = {
@@ -21,35 +27,77 @@ supabase.auth.onAuthStateChange((event, session) => {
         const basePath = isLocal ? '' : '/Comm-Test';
         
         // Determine user role based on email
-        let targetPortal = '/student/'; // Default fallback
+        let actualRole = 'student'; // Default fallback
         const userEmail = user.email?.toLowerCase() || '';
         
-        if (userEmail === 'immersionlabsindia@gmail.com') {
-            targetPortal = '/admin/';
-        } else if (userEmail === 'gauravroy476@gmail.com') {
-            targetPortal = '/teacher/';
-        } else if (userEmail === 'thorroy888@gmail.com' || userEmail === 'sauravroy469@gmail.com') {
-            targetPortal = '/student/';
+        if (userEmail === 'immersionlabsindia@gmail.com' || userEmail === 'rathorehps@gmail.com') {
+            actualRole = 'admin';
+        } else if (userEmail === 'gauravroy476@gmail.com' || userEmail === 'hps.sunghrathore@gmail.com') {
+            actualRole = 'teacher';
+        } else if (userEmail === 'thorroy888@gmail.com' || userEmail === 'sauravroy469@gmail.com' || userEmail === 'apsrathore47@gmail.com') {
+            actualRole = 'student';
         }
 
+        const selectedPortal = localStorage.getItem('selectedPortal') || 'student';
+        const isLoggingIn = localStorage.getItem('isLoggingIn');
+
+        // Auto-sync user profile for the chat system
+        // Fire-and-forget since it shouldn't block redirect
+        supabase.from('profiles').upsert({
+            auth_id: user.id,
+            email: userEmail,
+            name: edtechUser.name,
+            role: actualRole,
+            avatar_url: user.user_metadata?.avatar_url || ''
+        }, { onConflict: 'email' }).then(({ error }) => {
+            if (error) console.error("Error syncing profile:", error);
+        });
+
         if (window.location.pathname.includes('login.html') || window.location.pathname === '/' || window.location.pathname.endsWith('B2B-landing-page-main/')) {
-            window.location.href = window.location.origin + basePath + targetPortal;
+            // If they just visited the page (not returning from OAuth), do NOT auto-redirect them
+            if (isLoggingIn !== 'true') {
+                return;
+            }
+
+            if (isLoggingIn === 'true') {
+                if (actualRole !== selectedPortal) {
+                    localStorage.removeItem('isLoggingIn');
+                    localStorage.setItem('blockRedirect', 'true');
+                    alert("Not registered to this portal. You selected " + selectedPortal + " but your email belongs to the " + actualRole + " portal.");
+                    supabase.auth.signOut();
+                    return;
+                }
+                localStorage.removeItem('isLoggingIn');
+            }
+
+            if (localStorage.getItem('blockRedirect') === 'true') {
+                return;
+            }
+
+            window.location.href = window.location.origin + basePath + '/' + actualRole + '/';
         }
     }
 });
 
 export const signInWithGoogle = async () => {
+    // Set flag so the callback knows this is a manual login attempt
+    localStorage.setItem('isLoggingIn', 'true');
+
     // Construct the exact redirect URL to ensure Supabase accepts it
     const redirectUrl = window.location.origin + window.location.pathname;
     
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: redirectUrl
+            redirectTo: redirectUrl,
+            queryParams: {
+                prompt: 'select_account'
+            }
         }
     });
     
     if (error) {
+        localStorage.removeItem('isLoggingIn');
         console.error("Error signing in with Google:", error.message);
         alert("Login failed: " + error.message);
     }
