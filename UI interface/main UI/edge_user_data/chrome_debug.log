@@ -1,0 +1,47 @@
+[28600:28604:0623/175517.748:WARNING:chrome\browser\extensions\activity_log\activity_log_policy.cc:71] Scheduling init
+[28600:28604:0623/175517.748:WARNING:chrome\browser\extensions\activity_log\activity_log_policy.cc:71] Scheduling init
+[27788:27792:0623/175517.787:ERROR:ui\gl\direct_composition_support.cc:247] GetGpuDriverOverlayInfo: Failed to retrieve video device
+[27788:27792:0623/175517.788:VERBOSE1:components\viz\service\main\viz_main_impl.cc:87] VizNullHypothesis is disabled (not a warning)
+[16012:3944:0623/175517.810:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[12828:18540:0623/175517.824:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[23268:23792:0623/175517.853:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[3568:2204:0623/175517.855:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[24852:24908:0623/175517.859:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[14248:8636:0623/175517.863:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[27068:15296:0623/175517.867:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[28600:28604:0623/175517.868:WARNING:chrome\browser\extensions\external_registry_loader_win.cc:283] Error observing HKLM: 5
+[21908:24700:0623/175517.871:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[24784:24232:0623/175517.872:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[10268:9044:0623/175517.876:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[14060:27316:0623/175517.879:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[8720:26960:0623/175517.881:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[5804:11932:0623/175517.941:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[28600:28604:0623/175518.134:WARNING:components\signin\internal\identity_manager\account_fetcher_service.cc:228] Edge does not support fetching account capabilities
+[28600:28604:0623/175518.134:WARNING:components\signin\internal\identity_manager\account_fetcher_service.cc:192] Should not execute: Tests depending on this function may fail
+[18304:18856:0623/175518.164:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 28
+[28600:28604:0623/175518.203:WARNING:chrome\browser\edge_pinned_sites\pinned_sites_cache.cc:238] Cache isn't initialized
+[28600:28604:0623/175518.210:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://unpkg.com/@babel/standalone@7/babel.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.210:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://unpkg.com/@babel/standalone@7/babel.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.210:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://unpkg.com/@babel/standalone@7/babel.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.210:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://unpkg.com/@babel/standalone@7/babel.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.210:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.210:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.210:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.210:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.254:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://unpkg.com/@babel/standalone@7.29.7/babel.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.254:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://unpkg.com/@babel/standalone@7.29.7/babel.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.254:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://unpkg.com/@babel/standalone@7.29.7/babel.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:28604:0623/175518.254:INFO:CONSOLE:0] "Tracking Prevention blocked access to storage for https://unpkg.com/@babel/standalone@7.29.7/babel.min.js.", source: http://localhost:3000/Chapter_experience_L_S.html (0)
+[28600:27724:0623/175518.368:WARNING:components\sync\engine\sync_manager_impl.cc:348] Failed to decrypt data, retrieve keys from server.
+[28600:27724:0623/175518.371:WARNING:components\sync\engine\sync_manager_impl.cc:348] Failed to decrypt data, retrieve keys from server.
+[28600:28604:0623/175518.900:ERROR:chrome\browser\task_manager\providers\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a "Renderer" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/40528867.
+[28600:28604:0623/175519.282:INFO:CONSOLE:64] "cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation", source: https://cdn.tailwindcss.com/ (64)
+[28600:28604:0623/175519.312:WARNING:components\sync\base\data_type.cc:1667] Unknown field number 40781
+[28600:28604:0623/175519.312:WARNING:components\sync\base\data_type.cc:1667] Unknown field number 40781
+[28600:28604:0623/175519.312:WARNING:components\sync\base\data_type.cc:1667] Unknown field number 40781
+[28600:28604:0623/175519.312:WARNING:components\sync\base\data_type.cc:1667] Unknown field number 40781
+[28600:28604:0623/175519.312:WARNING:components\sync\base\data_type.cc:1667] Unknown field number 1171441
+[28600:28604:0623/175519.325:INFO:CONSOLE:3] "You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/", source: https://unpkg.com/@babel/standalone@7/babel.min.js (3)
+[28600:28604:0623/175519.519:WARNING:chrome\browser\edge_pinned_sites\pinned_sites_cache.cc:238] Cache isn't initialized
+[28600:28604:0623/175521.472:WARNING:chrome\browser\edge_underside\underside_helper.cc:1173] If test does not need FrontLoad, this may be expected. SetFrontLoadDecision: 3
+[16012:3944:0623/175523.674:ERROR:gpu\ipc\client\command_buffer_proxy_impl.cc:488] GPU state invalid after WaitForGetOffsetInRange.
