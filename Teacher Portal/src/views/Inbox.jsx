@@ -204,7 +204,8 @@ export default function Inbox() {
         ) : (
           <ChatInterface 
             currentUser={currentUser} 
-            activeTab={activeTab} 
+            activeTab={activeTab}
+            selectedClass={selectedClass}
             isManager={true}
             onUnreadCountChange={setUnreadCounts} 
           />

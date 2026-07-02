@@ -18,6 +18,14 @@ export default function Classes() {
   const [isCreating, setIsCreating] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [editingGroup, setEditingGroup] = useState(null);
+  const [currentUser, setCurrentUser] = useState({ email: 'teacher@edtech.edu', name: 'Teacher' });
+
+  useEffect(() => {
+    const userStr = localStorage.getItem('edtech_user');
+    if (userStr) {
+      try { setCurrentUser(JSON.parse(userStr)); } catch (e) {}
+    }
+  }, []);
 
   const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#D4A5A5', '#9B59B6', '#F39C12'];
 
@@ -89,12 +97,6 @@ export default function Classes() {
     
     setIsCreating(true);
     try {
-      const userStr = localStorage.getItem('edtech_user');
-      let currentUser = { email: 'teacher@edtech.edu', name: 'Teacher' };
-      if (userStr) {
-        try { currentUser = JSON.parse(userStr); } catch (e) {}
-      }
-
       // Add teacher to participants
       const participants = [...selectedStudents, currentUser.email];
       
@@ -140,7 +142,7 @@ export default function Classes() {
     setEditingGroup(group);
     setGroupName(displayName);
     setGroupColor(bgColor);
-    setSelectedStudents(group.participants.filter(email => email !== 'teacher@edtech.edu'));
+    setSelectedStudents(group.participants.filter(email => email !== currentUser.email));
     setActiveModal('manage_groups');
   };
 
