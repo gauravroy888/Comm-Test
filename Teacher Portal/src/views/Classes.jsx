@@ -32,11 +32,12 @@ export default function Classes() {
   const class6thStudents = [
     { id: '1', name: 'Thor Roy', email: 'thorroy888@gmail.com', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=thor' },
     { id: '2', name: 'Saurav Roy', email: 'sauravroy469@gmail.com', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=saurav' },
-    { id: '3', name: 'Aman Sharma', email: 'aman@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aman' },
-    { id: '4', name: 'Priya Patel', email: 'priya@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya' },
-    { id: '5', name: 'Rahul Singh', email: 'rahul@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul' },
-    { id: '6', name: 'Neha Gupta', email: 'neha@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Neha' },
-    { id: '7', name: 'Karan Malhotra', email: 'karan@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Karan' }
+    { id: '3', name: 'APS Rathore', email: 'apsrathore47@gmail.com', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aps' },
+    { id: '4', name: 'Aman Sharma', email: 'aman@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aman' },
+    { id: '5', name: 'Priya Patel', email: 'priya@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya' },
+    { id: '6', name: 'Rahul Singh', email: 'rahul@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul' },
+    { id: '7', name: 'Neha Gupta', email: 'neha@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Neha' },
+    { id: '8', name: 'Karan Malhotra', email: 'karan@edtech.edu', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Karan' }
   ];
 
   const filteredStudents = class6thStudents.filter(s => 
@@ -91,15 +92,18 @@ export default function Classes() {
       const participants = [...selectedStudents, currentUser.email];
       
       const newGroup = {
+        name: `${groupColor}|${groupName}`,
         type: 'group',
-        group_name: groupName,
-        group_color: groupColor,
         class_name: selectedClass.name,
         participants: participants,
-        created_at: new Date().toISOString()
+        lastMessage: 'Group created'
       };
       
-      await supabase.from('conversations').insert([newGroup]);
+      const { error } = await supabase.from('conversations').insert([newGroup]);
+      if (error) {
+        console.error("Supabase insert error:", error);
+        throw error;
+      }
       
       setShowSuccess(true);
       setTimeout(() => {
@@ -204,18 +208,23 @@ export default function Classes() {
                   </div>
                 )
               ) : (
-                classGroups.filter(g => (g.group_name || g.name || '').toLowerCase().includes(searchQuery.toLowerCase())).length > 0 ? 
-                  classGroups.filter(g => (g.group_name || g.name || '').toLowerCase().includes(searchQuery.toLowerCase())).map(group => (
+                classGroups.filter(g => (g.name || '').toLowerCase().includes(searchQuery.toLowerCase())).length > 0 ? 
+                  classGroups.filter(g => (g.name || '').toLowerCase().includes(searchQuery.toLowerCase())).map(group => {
+                  const hasColor = group.name && group.name.includes('|');
+                  const bgColor = hasColor ? group.name.split('|')[0] : 'var(--accent-purple)';
+                  const displayName = hasColor ? group.name.split('|')[1] : group.name;
+                  return (
                   <div key={group.id} style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '15px', borderBottom: '1px solid rgba(255,255,255,0.05)', transition: 'background 0.2s', borderRadius: '8px' }}>
-                    <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: group.group_color || group.color || 'var(--accent-purple)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <Users size={20} color="#000" />
                     </div>
                     <div>
-                      <h4 style={{ margin: 0, color: '#fff', fontSize: '15px' }}>{group.group_name || group.name}</h4>
+                      <h4 style={{ margin: 0, color: '#fff', fontSize: '15px' }}>{displayName}</h4>
                       <p style={{ margin: '2px 0 0 0', color: 'var(--text-secondary)', fontSize: '13px' }}>{group.participants?.length || 0} Members</p>
                     </div>
                   </div>
-                )) : (
+                  );
+                }) : (
                   <div style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-secondary)' }}>
                     No groups found for this class.
                   </div>

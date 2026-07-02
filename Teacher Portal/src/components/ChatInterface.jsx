@@ -167,11 +167,12 @@ export default function ChatInterface({ currentUser, activeTab, selectedClass, i
           const class6thStudents = [
             { id: 'mock-1', name: 'Thor Roy', email: 'thorroy888@gmail.com', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=thor' },
             { id: 'mock-2', name: 'Saurav Roy', email: 'sauravroy469@gmail.com', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=saurav' },
-            { id: 'mock-3', name: 'Aman Sharma', email: 'aman@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aman' },
-            { id: 'mock-4', name: 'Priya Patel', email: 'priya@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya' },
-            { id: 'mock-5', name: 'Rahul Singh', email: 'rahul@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul' },
-            { id: 'mock-6', name: 'Neha Gupta', email: 'neha@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Neha' },
-            { id: 'mock-7', name: 'Karan Malhotra', email: 'karan@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Karan' }
+            { id: 'mock-3', name: 'APS Rathore', email: 'apsrathore47@gmail.com', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aps' },
+            { id: 'mock-4', name: 'Aman Sharma', email: 'aman@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aman' },
+            { id: 'mock-5', name: 'Priya Patel', email: 'priya@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya' },
+            { id: 'mock-6', name: 'Rahul Singh', email: 'rahul@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul' },
+            { id: 'mock-7', name: 'Neha Gupta', email: 'neha@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Neha' },
+            { id: 'mock-8', name: 'Karan Malhotra', email: 'karan@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Karan' }
           ];
           
           // Merge mock students ensuring no duplicates by email
@@ -359,20 +360,24 @@ export default function ChatInterface({ currentUser, activeTab, selectedClass, i
           {filteredProfiles.length > 0 ? filteredProfiles.map(contact => {
             const key = contact.isGroup ? contact.id : contact.email;
             const unread = unreadCounts[key] || 0;
+            const contactNameStr = contact.name || contact.group_name || 'Group';
+            const hasColor = contact.isGroup && contactNameStr.includes('|');
+            const bgColor = hasColor ? contactNameStr.split('|')[0] : 'var(--accent-purple)';
+            const displayName = hasColor ? contactNameStr.split('|')[1] : contactNameStr;
             return (
               <div key={contact.id} className={`chat-contact-item ${activeContact?.id === contact.id ? 'active' : ''}`} onClick={() => setActiveContact(contact)}>
                 <div className="chat-contact-avatar">
                   {contact.isGroup ? (
-                    <div className="avatar-placeholder" style={{ background: contact.group_color || contact.color || 'var(--accent-purple)' }}><Users size={20} /></div>
+                    <div className="avatar-placeholder" style={{ background: bgColor }}><Users size={20} /></div>
                   ) : contact.avatar_url ? (
-                    <img src={contact.avatar_url} alt={contact.name || contact.group_name} />
+                    <img src={contact.avatar_url} alt={displayName} />
                   ) : (
-                    <div className="avatar-placeholder">{(contact.name || contact.group_name || 'U').charAt(0).toUpperCase()}</div>
+                    <div className="avatar-placeholder">{displayName.charAt(0).toUpperCase()}</div>
                   )}
                 </div>
                 <div className="chat-contact-info">
                   <div className="chat-contact-name-row">
-                    <span className="chat-contact-name">{contact.name || contact.group_name}</span>
+                    <span className="chat-contact-name">{displayName}</span>
                     {unread > 0 && <span className="unread-badge">{unread}</span>}
                     {contact.isGroup && <span className="chat-contact-role">Group</span>}
                     {!contact.isGroup && <span className="chat-contact-role">{contact.role}</span>}
