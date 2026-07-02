@@ -156,7 +156,28 @@ export default function ChatInterface({ currentUser, activeTab, selectedClass, i
         filtered = filtered.filter(p => p.role === 'teacher');
       } else if (activeTab === 'class_view' || activeTab === 'classes') {
         // Teacher portal: show both students and groups
-        const classStudents = filtered.filter(p => p.role === 'student');
+        let classStudents = filtered.filter(p => p.role === 'student');
+        
+        // Mock specific students for Class 6th if they aren't already in the DB
+        if (selectedClass === 'Class 6th') {
+          const class6thStudents = [
+            { id: 'mock-1', name: 'Thor Roy', email: 'thorroy888@gmail.com', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=thor' },
+            { id: 'mock-2', name: 'Saurav Roy', email: 'sauravroy469@gmail.com', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=saurav' },
+            { id: 'mock-3', name: 'Aman Sharma', email: 'aman@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aman' },
+            { id: 'mock-4', name: 'Priya Patel', email: 'priya@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya' },
+            { id: 'mock-5', name: 'Rahul Singh', email: 'rahul@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul' },
+            { id: 'mock-6', name: 'Neha Gupta', email: 'neha@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Neha' },
+            { id: 'mock-7', name: 'Karan Malhotra', email: 'karan@edtech.edu', role: 'student', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Karan' }
+          ];
+          
+          // Merge mock students ensuring no duplicates by email
+          class6thStudents.forEach(ms => {
+            if (!classStudents.some(cs => cs.email === ms.email)) {
+              classStudents.push(ms);
+            }
+          });
+        }
+        
         const classGroups = groups
           .filter(g => !selectedClass || g.class_name === selectedClass)
           .map(g => ({ ...g, isGroup: true }));
@@ -338,16 +359,16 @@ export default function ChatInterface({ currentUser, activeTab, selectedClass, i
               <div key={contact.id} className={`chat-contact-item ${activeContact?.id === contact.id ? 'active' : ''}`} onClick={() => setActiveContact(contact)}>
                 <div className="chat-contact-avatar">
                   {contact.isGroup ? (
-                    <div className="avatar-placeholder" style={{ background: 'var(--accent-purple)' }}><Users size={20} /></div>
+                    <div className="avatar-placeholder" style={{ background: contact.group_color || contact.color || 'var(--accent-purple)' }}><Users size={20} /></div>
                   ) : contact.avatar_url ? (
-                    <img src={contact.avatar_url} alt={contact.name} />
+                    <img src={contact.avatar_url} alt={contact.name || contact.group_name} />
                   ) : (
-                    <div className="avatar-placeholder">{contact.name.charAt(0).toUpperCase()}</div>
+                    <div className="avatar-placeholder">{(contact.name || contact.group_name || 'U').charAt(0).toUpperCase()}</div>
                   )}
                 </div>
                 <div className="chat-contact-info">
                   <div className="chat-contact-name-row">
-                    <span className="chat-contact-name">{contact.name}</span>
+                    <span className="chat-contact-name">{contact.name || contact.group_name}</span>
                     {unread > 0 && <span className="unread-badge">{unread}</span>}
                     {contact.isGroup && <span className="chat-contact-role">Group</span>}
                     {!contact.isGroup && <span className="chat-contact-role">{contact.role}</span>}
