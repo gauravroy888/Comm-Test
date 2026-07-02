@@ -4,11 +4,12 @@ import { Users, BookOpen } from 'lucide-react';
 
 export default function Classes() {
   const classes = [
-    { id: '10A', name: 'Class 10-A', subject: 'Advanced Mathematics', students: 32, performance: '85%' },
-    { id: '9B', name: 'Class 9-B', subject: 'Physics Basics', students: 28, performance: '78%' },
-    { id: '11C', name: 'Class 11-C', subject: 'Quantum Mechanics', students: 24, performance: '92%' },
-    { id: '12A', name: 'Class 12-A', subject: 'Calculus', students: 40, performance: '88%' },
-    { id: '6A', name: 'Class 6th', subject: 'General Science', students: 30, performance: '82%' }
+    { id: '1st', name: 'Class 1st', subject: 'Basic Math', students: 30, performance: '80%' },
+    { id: '2nd', name: 'Class 2nd', subject: 'Basic English', students: 28, performance: '82%' },
+    { id: '3rd', name: 'Class 3rd', subject: 'Environmental Studies', students: 32, performance: '85%' },
+    { id: '4th', name: 'Class 4th', subject: 'Social Science', students: 35, performance: '81%' },
+    { id: '5th', name: 'Class 5th', subject: 'General Knowledge', students: 29, performance: '88%' },
+    { id: '6th', name: 'Class 6th', subject: 'General Science', students: 30, performance: '82%' }
   ];
 
   return (

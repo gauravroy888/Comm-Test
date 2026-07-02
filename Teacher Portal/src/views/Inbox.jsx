@@ -7,7 +7,7 @@ import ChatInterface from '../components/ChatInterface';
 export default function Inbox() {
   const [activeTab, setActiveTab] = useState('students'); // 'students' | 'classes' | 'staff' | 'announcements'
   const [selectedClass, setSelectedClass] = useState(null);
-  const classesList = ['Class 10-A', 'Class 9-B', 'Class 11-C', 'Class 12-A', 'Class 6th'];
+  const classesList = ['Class 1st', 'Class 2nd', 'Class 3rd', 'Class 4th', 'Class 5th', 'Class 6th'];
   const [currentUser, setCurrentUser] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
   const [unreadCounts, setUnreadCounts] = useState({ students: 0, staff: 0 });
